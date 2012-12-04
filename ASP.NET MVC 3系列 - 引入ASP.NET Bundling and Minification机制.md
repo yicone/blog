@@ -1,20 +1,32 @@
-System.Web.Optimization是在ASP.NET 4.5中正式引入的。  
+`System.Web.Optimization`是在`ASP.NET 4.5`中正式引入的。  
 
-## 在MVC 3中如何使用Bundling and Minification机制 ##
-个人建议的方法，是在VS中建一个MVC 4的项目，看看`Global.asax.cs`里多了什么，看看`App_Start`目录下多了什么。
+## 在`MVC 3`中如何使用Bundling and Minification机制 ##
+个人建议的方法，是在VS中建一个`MVC 4`的项目，看看`Global.asax.cs`里多了什么，看看`App_Start`目录下多了什么。
 >**也可参考**  
 1. [内容已过期]http://joeyiodice.com/using-mvc4-minification-and-bundling-in-mvc3   
 2. [http://forums.asp.net/t/1799992.aspx/1](http://forums.asp.net/t/1799992.aspx/1) 
 
 ## 重要特性总结 ##
 (待补充)  
-1. 对bundle的请求不受`OutputCache`影响。对`~/bundleVirtualPath` 的请求，总是会根据内存中`BundleTable.Bundles` 所定义的映射，定位物理文件，并响应到客户端。  
-2. 对物理文件修改后，文件变化可以立刻输出。  
-3. 文件内容相同的请求，`v`参数的值不变，因此可能会使用上浏览器缓存。  
-4. bundle不能定义对非同域的文件的引用。能否定义同域的但路径为虚拟路径的文件的引用，未知。  
+1. `Bundle`使用了`OutputCache`。  
+2. 对物理文件修改后，文件变化可以立刻输出。原理是使用了缓存依赖，源文件作为依赖项。  
+3. 文件内容相同的请求，`v`参数的值不变，因此可能会使用上浏览器内的客户端缓存。  
+4. `Bundle`不能定义对不同`domain`的文件的引用。能否定义同域的但路径为虚拟路径的文件的引用，未知。  
 
 ## 动态Bundle ##
+`Bundle`在`Application_Start`时被注册到`BundleTable.Bundles`中。这样做的好处是，（预定义的）`Bundle`可以被重用。  
+
+但如果仅有这一条途径注册`Bundle`，有时候会觉得未免太繁琐：  
+1）修改`BundelConfig.cs`  
+2）重新编译项目  
+3）忍受站点启动缓慢的过程。  
+
+假如你遇到的情形是，某个页面上需要一个偶尔使用的一个或多个js，你想利用**Bundling and Minification机制**对其打包或启用压缩，有没有简单点的办法呢？  
+
+看下别人的解决方案：
 <script type="text/javascript" src="https://gist.github.com/4201780.js?file=HtmlExtensions.cs"></script>
+
+前面的问题很好的解决了。现在试着想一个新问题，这样做是否就无法满足**重用Bundle**的需求呢？如果你了解`MVC 2`，可以试着用`MVC 2`中引入的`DisplayTemplates `机制解决这个问题。
 
 > 参考资料  
 1. [**asp-net-mvc-4-use-bundles-beneficts-for-url-content**](http://stackoverflow.com/questions/13124218/asp-net-mvc-4-use-bundles-beneficts-for-url-content?rq=1)  
