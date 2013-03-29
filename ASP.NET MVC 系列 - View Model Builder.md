@@ -1,11 +1,12 @@
-此文介绍的内容，无关语言和平台。本质上是职责的分离，将`ViewModel` 的创建过程分离到`ModelBuilder` 中。好处是：
-1. 提高了Controller 的可读性
-2. 
+此文介绍的内容，无关语言和平台。
 
 ## 从Controller中分离出ModelBuilder ##
-使用MVC时，在Controller的实现中，会包含很多用于创建ViewModel的代码。  
-例如，
-我们有一个用于呈现填写订单的页面(`~\Order\FT-BJS-95486`)，对应的Action 如下：
+本质上是为了职责的分离，将`ViewModel` 的创建过程分离到`ModelBuilder` 中。
+
+
+使用MVC时，在Controller的实现中，会包含很多用于创建ViewModel的代码。 
+让我们从一个例子开始。  
+假设我们有一个用于呈现填写订单的页面(`~\Order\FT-BJS-95486`)，对应的Action 如下：
 
 	public ActionResult Order(string productNo)
 	{
