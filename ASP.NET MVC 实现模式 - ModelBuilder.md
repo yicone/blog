@@ -1,6 +1,6 @@
 此文介绍的内容，无关语言和平台。
 
-## 从Controller中分离出ModelBuilder ##
+### 从Controller中分离出ModelBuilder
 将`ViewModel`的创建过程从`Controller`中分离到`ModelBuilder`中，本质上是为了职责的分离，也提高了Controller的可读性。
 
 ### 通常的情况 ###
@@ -20,9 +20,9 @@
 
 		return View(model);
 	}
-	```
 其中OrderModel 这个`ViewModel`的定义为：
 
+	```c#
 	public class OrderModel 
 	{
 		public string ProductNo { get; set; }
@@ -32,6 +32,7 @@
 	}
 接下来，为了接收用户输入的订单信息，我们可能会有这样一个`Action`：
 
+	```c#
 	[HttpPost]
 	public ActionResult Order(OrderModel model)
 	{
@@ -64,6 +65,7 @@
 
 	var p = ProductService.GetProduct(productNo);
 	model.ProductName = product.ProductName;
+	
 我们可以归纳出这些重复的部分，分属于两个`ViewModel被创建的“阶段”`:
 
 1. Create
@@ -71,6 +73,7 @@
 
 我们据此抽象出`IModelBuilder`接口
 
+	```C#
     public interface IModelBuilder<TViewModel>
     {
         TViewModel Create();
@@ -79,6 +82,7 @@
 ### 3. 改造 ###
 我们来写一个OrderModelBuilder,实现IModelBuilder接口
 
+	```C#
 	public class OrderModelBuilder : IModelBuilder<OrderModel>
 	{
 		private string _productNo;
@@ -108,6 +112,7 @@
 	}
 用OrderModelBuilder来简化OrderController
 
+	```C#
 	private OrderModelBuilder GetBuilder(string productNo)
 	{
 		var p = ProductService.GetProduct(productNo);
