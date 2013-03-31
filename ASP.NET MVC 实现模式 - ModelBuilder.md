@@ -20,6 +20,8 @@
 
 		return View(model);
 	}
+	```
+	
 其中OrderModel 这个`ViewModel`的定义为：
 
 	```c#
@@ -30,6 +32,7 @@
 		public int Count { get; set; }
 		public string Address { get; set; }
 	}
+	```
 接下来，为了接收用户输入的订单信息，我们可能会有这样一个`Action`：
 
 	```c#
