@@ -1,3 +1,5 @@
+> 此文介绍的内容，无关语言和平台。
+
 将`ViewModel`的创建过程从`Controller`中分离到`ModelBuilder`中，本质上是为了职责的分离，也提高了Controller的可读性。
 
 ### 通常的情况 ###
@@ -142,11 +144,4 @@
 		return View("OrderConfirm", model2);
 	}
 这样，就解决了我们在第1节中提出的两个问题。
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-此文介绍的内容，无关语言和平台。
-=======
->>>>>>> FETCH_HEAD
-=======
->>>>>>> FETCH_HEAD
