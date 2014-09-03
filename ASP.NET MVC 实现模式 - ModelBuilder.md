@@ -7,7 +7,7 @@
 让我们从一个例子开始。  
 假设我们有一个用于呈现填写订单的页面(`~\Order\FT-BJS-95486`)，对应的Action 如下：
 
-	```c#
+	```charp
 	public ActionResult Order(string productNo)
 	{
 		var p = ProductService.GetProduct(productNo);
